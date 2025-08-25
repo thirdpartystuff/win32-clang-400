@@ -89,7 +89,7 @@ limitations in handling dllimport attribute.  */
 # define __CRT_INLINE __inline
 #else
 # if ( __MINGW_GNUC_PREREQ(4, 3)  &&  __STDC_VERSION__ >= 199901L) \
-     || (defined (__clang__))
+     || (defined (__clang__) &&  __STDC_VERSION__ >= 199901L)
 #  define __CRT_INLINE extern inline __attribute__((__gnu_inline__))
 # else
 #  define __CRT_INLINE extern __inline__

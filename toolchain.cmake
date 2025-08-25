@@ -1,0 +1,26 @@
+
+set(CMAKE_SYSTEM_NAME Windows-GNU)
+set(CLANG TRUE CACHE INTERNAL "")
+set(MINGW TRUE CACHE INTERNAL "")
+set(WIN32 TRUE CACHE INTERNAL "")
+
+set(CMAKE_C_COMPILER "clang")
+set(CMAKE_CXX_COMPILER "clang++")
+set(CMAKE_AR "llvm-ar" CACHE INTERNAL "")
+set(CMAKE_RANLIB "llvm-ranlib" CACHE INTERNAL "")
+set(CMAKE_RC_COMPILER "windres" CACHE INTERNAL "")
+
+set(CMAKE_C_FLAGS_INIT "-target i686-w64-mingw32")
+set(CMAKE_CXX_FLAGS_INIT "-target i686-w64-mingw32")
+set(CMAKE_EXE_LINKER_FLAGS_INIT "-Wno-unused-command-line-argument -rtlib=compiler-rt -lgcc -lgcc_s")
+
+set(CMAKE_RC_COMPILE_OBJECT
+    "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>"
+    CACHE INTERNAL "")
+
+set(CMAKE_C_LINK_EXECUTABLE
+    "<CMAKE_C_COMPILER> <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>"
+    CACHE INTERNAL "")
+
+set(CMAKE_USER_MAKE_RULES_OVERRIDE "${CMAKE_CURRENT_LIST_DIR}/toolchain-override.cmake")
+include("${CMAKE_USER_MAKE_RULES_OVERRIDE}")
